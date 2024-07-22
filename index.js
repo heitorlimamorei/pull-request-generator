@@ -56,6 +56,18 @@ async function generatePullRequestDescription(commits, model) {
   )}`;
 
   try {
+    if (model == 'llama3') {
+      const resp = await axios.post('http://localhost:11434/api/generate', {
+        model: 'llama3',
+        prompt: `Você é um assistant capaz de receber os commits que ocorrram no contexto de um pull request e então gerar uma descrição para este pull_request. Use o exemplo a seguir como um template: ${template} 
+        ${prompt}
+        `,
+        stream: false
+      }, {timeout: 100000});
+
+      return resp.data.response;
+    }
+
     const response = await openai.chat.completions.create({
       model: model,
       max_tokens: 10000,
