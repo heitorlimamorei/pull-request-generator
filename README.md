@@ -14,6 +14,7 @@ Este projeto é uma ferramenta automatizada que baixa os commits de diferença e
 - Node.js instalado
 - Conta no GitHub com token de acesso
 - Conta no OpenAI com chave de acesso
+- (Opcional) Ollama 
 
 ## Instalação
 
@@ -72,4 +73,15 @@ Para iniciar a aplicação, simplesmente execute o alias criado:
 
 ```sh
 generate-pr
+```
+
+
+## Llama3
+
+Para rodar rodar o PR Generator usando o llama LLM localmente é preciso instalar o ollama: https://ollama.com/download
+
+## Executando o llama3
+
+```sh
+ollama run llama3
 ```
