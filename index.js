@@ -3,6 +3,7 @@
 import axios from "axios";
 import OpenAI from "openai";
 import inquirer from "inquirer";
+import readJSONFile from "./utils/readJSONFile.js"
 import { configDotenv } from "dotenv";
 
 configDotenv();
@@ -21,45 +22,33 @@ const openai = new OpenAI({
   apiKey: apiKey,
 });
 
-const template = `Descrição do PR
-Este PR abrange uma série de melhorias e novos recursos para o módulo de cartão de crédito. Abaixo está um resumo detalhado das mudanças:
-#### Novos Recursos e Funcionalidades
-Módulo de Cartão de Crédito:
-- Adicionados funcionalidades para aumentar e diminuir o limite do cartão.
-- Métodos e utilidades para gerenciar parcelamentos.
-Utilitários e Tipos:a
-- Inclusão de novos utilitários para gerenciamento de parcelas.
-- Adicionadas definições de tipos e DTOs (Data Transfer Objects) para operações de criação, atualização e consulta.
-Métodos Adicionais:
-- Método resolveAvalibleLimitDelta adicionado para calcular o delta de limite disponível.
-- Adição parcial de novos itens ao módulo de cartão de crédito.
-Atualizações Gerais:
-- Exports organizados e propriedades adicionais incorporadas nos DTOs.
-- Atualizações e correções de indentação.
-#### Correções de Bugs
-Correção de Typos:
-- Diversos erros de digitação foram corrigidos em diferentes partes do código.
-- Caminhos de URL corrigidos no middleware do Express para o método PUT.
-#### Como Testar
-Verifique as novas funcionalidades de incremento e decremento de limite de cartão.
-Realize testes nos métodos de utilitários de parcelamento.
-Teste as operações CRUD utilizando os novos DTOs para atualização, criação e consulta.
-Garanta que o método resolveAvalibleLimitDelta realiza os cálculos corretamente.
-Confirme se todas as correções de typos e caminhos estão funcionando conforme esperado no middleware do Express.
-#### Notas Adicionais
-Este PR inclui commits realizados no dia 20 de julho de 2024, e ontem.`;
+async function getBasePrompt() {
+  const config = await readJSONFile('data/config.json');
+  
+  if (!config.template || !config.base_prompt || !config.analysis_prompt || !config.description_prompt) {
+    throw new Error('Occoreu um erro durante a leitura do config.json')
+  }
+
+  return `${config.base_prompt} ${config.analysis_prompt} ${config.description_prompt}: ${config.template}`;
+}
 
 async function generatePullRequestDescription(commits, model) {
-  const descriptions = commits.map((commit) => commit.commit.message);
-  const prompt = `Gerar uma descrição de pull request a partir das seguintes mensagens de commit:\n\n${descriptions.join(
+  const data = commits.map(({commit}) => JSON.stringify({
+    message: commit.message,
+    diff: commit.patch
+  }));
+
+  const prompt = `Gerar uma descrição de pull request a partir das seguintes mensagens de commit:\n\n${data.join(
     "\n"
   )}`;
 
   try {
+    const basePrompt = await getBasePrompt();
+
     if (model == 'llama3') {
       const resp = await axios.post('http://localhost:11434/api/generate', {
         model: 'llama3',
-        prompt: `Você é um assistant capaz de receber os commits que ocorrram no contexto de um pull request e então gerar uma descrição para este pull_request. Use o exemplo a seguir como um template: ${template} 
+        prompt: ` ${basePrompt} 
         ${prompt}
         `,
         stream: false
@@ -74,7 +63,7 @@ async function generatePullRequestDescription(commits, model) {
       messages: [
         {
           role: "system",
-          content: `Você é um assistant capaz de receber os commits que ocorrram no contexto de um pull request e então gerar uma descrição para este pull_request. Use o exemplo a seguir como um template: ${template} `,
+          content: basePrompt,
         },
         {
           role: "user",
