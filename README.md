@@ -40,8 +40,10 @@ Copie e cole o seguinte comando no terminal para instalar e configurar tudo auto
 
 ```sh
 git clone https://github.com/heitorlimamorei/pull-request-generator.git && cd pull-request-generator && echo 'GIT_HUB_TOKEN=seutoken_github
-OPEN_AI_KEY=suachave_openai' > .env && echo 'alias generate-pr="(cd $(pwd) && npm start)"' >> ~/.zshrc && source ~/.zshrc
+OPEN_AI_KEY=suachave_openai' > .env && echo 'alias generate-pr="(original_dir=$(pwd); cd <CAMINHO_DO_REPOSITORIO>; npm start -- --original-dir=\"$original_dir\")"' >> ~/.zshrc && source ~/.zshrc
 ```
+
+**Substitua `<CAMINHO_DO_REPOSITORIO>` pelo caminho onde você clonou o repositório.**
 
 ### Para Usuários do Bash
 
@@ -49,10 +51,10 @@ Se você usa Bash, substitua `~/.zshrc` por `~/.bashrc`:
 
 ```sh
 git clone https://github.com/heitorlimamorei/pull-request-generator.git && cd pull-request-generator && echo 'GIT_HUB_TOKEN=seutoken_github
-OPEN_AI_KEY=suachave_openai' > .env && echo 'alias generate-pr="(cd $(pwd) && npm start)"' >> ~/.bashrc && source ~/.bashrc
+OPEN_AI_KEY=suachave_openai' > .env && echo 'alias generate-pr="(original_dir=$(pwd); cd <CAMINHO_DO_REPOSITORIO>; npm start -- --original-dir=\"$original_dir\")"' >> ~/.bashrc && source ~/.bashrc
 ```
 
-**Substitua `seutoken_github` e `suachave_openai` com suas chaves reais.**
+**Substitua `<CAMINHO_DO_REPOSITORIO>` pelo caminho onde você clonou o repositório e `seutoken_github` e `suachave_openai` com suas chaves reais.**
 
 ## Uso
 
