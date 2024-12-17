@@ -36,83 +36,23 @@ Para obter melhores resultados com a IA, mantenha tanto o **título** quanto as 
 
 ## Instalação
 
-1. Clone o repositório:
+Copie e cole o seguinte comando no terminal para instalar e configurar tudo automaticamente:
 
 ```sh
-git clone <NOME_DO_REPOSITÓRIO>
-cd <NOME_DO_DIRETÓRIO_CLONADO>
+git clone https://github.com/heitorlimamorei/pull-request-generator.git && cd pull-request-generator && echo 'GIT_HUB_TOKEN=seutoken_github
+OPEN_AI_KEY=suachave_openai' > .env && echo 'alias generate-pr="(cd $(pwd) && npm start)"' >> ~/.zshrc && source ~/.zshrc
 ```
 
-2. Crie um arquivo `.env` na raiz do projeto e adicione suas chaves da API:
+### Para Usuários do Bash
 
-```env
-GIT_HUB_TOKEN=seutoken_github
-OPEN_AI_KEY=suachave_openai
-```
-
-## Configuração
-
-### Configuração para ZSH
-
-#### 1. Adicionar Caminho do Diretório ao ZSH
-
-Adicione o diretório onde você clonou o repositório ao seu `PATH`. Abra o terminal e edite seu arquivo `.zshrc`:
+Se você usa Bash, substitua `~/.zshrc` por `~/.bashrc`:
 
 ```sh
-nano ~/.zshrc
+git clone https://github.com/heitorlimamorei/pull-request-generator.git && cd pull-request-generator && echo 'GIT_HUB_TOKEN=seutoken_github
+OPEN_AI_KEY=suachave_openai' > .env && echo 'alias generate-pr="(cd $(pwd) && npm start)"' >> ~/.bashrc && source ~/.bashrc
 ```
 
-Adicione a seguinte linha, substituindo `<CAMINHO_DO_DIRETÓRIO>` pelo caminho real do diretório clonado:
-
-```sh
-export PATH=$PATH:<CAMINHO_DO_DIRETÓRIO>
-```
-
-Salve e feche o arquivo, depois recarregue as configurações do ZSH:
-
-```sh
-source ~/.zshrc
-```
-
-#### 2. Criar Alias Global no ZSH
-
-Ainda no arquivo `.zshrc`, adicione a seguinte linha para criar um alias global que executa `npm start` no diretório do projeto:
-
-```sh
-alias generate-pr="(cd ~/<CAMINHO_DO_DIRETÓRIO> && npm start)"
-```
-
-Substitua `<CAMINHO_DO_DIRETÓRIO>` pelo caminho real do diretório clonado. Salve, feche o arquivo e recarregue as configurações do ZSH novamente:
-
-```sh
-source ~/.zshrc
-```
-
-### Configuração para Usuários do Bash
-
-1. Abra o terminal e edite o arquivo `.bashrc`:
-
-```sh
-nano ~/.bashrc
-```
-
-2. Adicione o caminho do diretório clonado ao `PATH`:
-
-```sh
-export PATH=$PATH:<CAMINHO_DO_DIRETÓRIO>
-```
-
-3. Adicione um alias para executar o projeto:
-
-```sh
-alias generate-pr="(cd ~/<CAMINHO_DO_DIRETÓRIO> && npm start)"
-```
-
-4. Salve e feche o arquivo. Recarregue as configurações do Bash:
-
-```sh
-source ~/.bashrc
-```
+**Substitua `seutoken_github` e `suachave_openai` com suas chaves reais.**
 
 ## Uso
 
