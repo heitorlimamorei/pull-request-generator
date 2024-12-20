@@ -39,8 +39,8 @@ Para obter melhores resultados com a IA, mantenha tanto o **título** quanto as 
 1. Clone o repositório:
 
 ```sh
-git clone <NOME_DO_REPOSITÓRIO>
-cd <NOME_DO_DIRETÓRIO_CLONADO>
+git clone https://github.com/heitorlimamorei/pull-request-generator
+cd pull-request-generator
 ```
 
 2. Crie um arquivo `.env` na raiz do projeto e adicione suas chaves da API:
@@ -79,7 +79,7 @@ source ~/.zshrc
 Ainda no arquivo `.zshrc`, adicione a seguinte linha para criar um alias global que executa `npm start` no diretório do projeto:
 
 ```sh
-alias generate-pr="(cd ~/<CAMINHO_DO_DIRETÓRIO> && npm start)"
+alias generate-pr='(original_dir=$(pwd); cd <CAMINHO_DO_DIRETÓRIO>; npm start -- --original-dir="$original_dir")'
 ```
 
 Substitua `<CAMINHO_DO_DIRETÓRIO>` pelo caminho real do diretório clonado. Salve, feche o arquivo e recarregue as configurações do ZSH novamente:
@@ -105,7 +105,7 @@ export PATH=$PATH:<CAMINHO_DO_DIRETÓRIO>
 3. Adicione um alias para executar o projeto:
 
 ```sh
-alias generate-pr="(cd ~/<CAMINHO_DO_DIRETÓRIO> && npm start)"
+alias generate-pr='(original_dir=$(pwd); cd <CAMINHO_DO_DIRETÓRIO>; npm start -- --original-dir="$original_dir")'
 ```
 
 4. Salve e feche o arquivo. Recarregue as configurações do Bash:
