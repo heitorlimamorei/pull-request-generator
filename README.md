@@ -39,8 +39,8 @@ Para obter melhores resultados com a IA, mantenha tanto o **título** quanto as 
 1. Clone o repositório:
 
 ```sh
-git clone <NOME_DO_REPOSITÓRIO>
-cd <NOME_DO_DIRETÓRIO_CLONADO>
+git clone https://github.com/heitorlimamorei/pull-request-generator
+cd pull-request-generator
 ```
 
 2. Crie um arquivo `.env` na raiz do projeto e adicione suas chaves da API:
