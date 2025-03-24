@@ -3,11 +3,8 @@ import OpenAI from "openai";
 import { getBasePrompt } from "./getBasePrompt.js";
 
 export async function generatePullRequestDescription(commits, model, apiKey) {
-  const data = commits.map(({ commit }) =>
-    JSON.stringify({
-      message: commit.message,
-      diff: commit.patch,
-    }),
+  const data = commits.map((d) =>
+    JSON.stringify(d),
   );
 
   const prompt = `Gerar uma descrição de pull request a partir das seguintes mensagens de commit:\n\n${data.join(
